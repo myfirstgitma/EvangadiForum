@@ -108,6 +108,8 @@ const Login = () => {
           // navigate(navStateData?.state?.redirect || "/",{replace:true})
 
           //navigate("/"); // Redirect to home after a short delay to allow toast to show
+        }else{
+          toast.error("Login failed. Please check your credentials. if you don't have an account, please signup first.");
         }
       } else {
         // Signup Logic
@@ -129,16 +131,18 @@ const Login = () => {
             firstName: "",
             lastName: "",
           });
+        }else{
+          toast.error("Signup failed. Please try again.");
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error("My current error",error?.response?.data?.msg);
       if (
-        error.response &&
-        error.response.data &&
+        error.response ||
+        error.response.data ||
         error.response.data.message
       ) {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.msg);
       } else {
         toast.error("An error occurred. Please try again.");
       }
